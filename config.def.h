@@ -194,7 +194,7 @@
 
 /* To start in Fullscreen, or not. */
 
-#if defined(HAVE_STEAM) || defined(DINGUX)
+#if defined(HAVE_STEAM) || defined(DINGUX) || defined(WEBOS)
 /* Start in fullscreen mode for Steam and
  * Dingux builds */
 #define DEFAULT_FULLSCREEN true
