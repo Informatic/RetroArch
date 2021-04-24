@@ -32,6 +32,10 @@
 #include "../common/sdl2_common.h"
 #endif
 
+#if defined(WEBOS) && defined(HAVE_SDL2)
+#include <SDL_webOS.h>
+#endif
+
 typedef struct gfx_ctx_sdl_data
 {
    int  width;
@@ -84,6 +88,12 @@ static void *sdl_ctx_init(void *video_driver)
 
 #ifdef HAVE_X11
    XInitThreads();
+#endif
+
+#ifdef WEBOS
+   SDL_SetHint(SDL_HINT_WEBOS_ACCESS_POLICY_KEYS_BACK, "true");
+   SDL_SetHint(SDL_HINT_WEBOS_ACCESS_POLICY_KEYS_EXIT, "true");
+   SDL_SetHint(SDL_HINT_WEBOS_CURSOR_SLEEP_TIME, "5000");
 #endif
 
    /* Initialise graphics subsystem, if required */
@@ -201,7 +211,7 @@ static bool sdl_ctx_set_video_mode(void *data,
    {
       unsigned display = video_monitor_index;
 
-      sdl->win = SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED_DISPLAY(display),
+      sdl->win = SDL_CreateWindow("RetroArch", SDL_WINDOWPOS_UNDEFINED_DISPLAY(display),
                                SDL_WINDOWPOS_UNDEFINED_DISPLAY(display),
                                width, height, SDL_WINDOW_OPENGL | fsflag);
    }

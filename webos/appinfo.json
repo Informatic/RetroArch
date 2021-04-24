@@ -1,0 +1,11 @@
+{
+    "id": "com.retroarch",
+    "version": "1.9.1",
+    "vendor": "webosbrew.org",
+    "title": "RetroArch",
+    "icon": "icon160.png",
+    "main": "retroarch",
+    "iconColor": "#333333",
+    "type": "native",
+    "appDescription": "Emulation frontend"
+}

@@ -34567,6 +34567,11 @@ static bool retroarch_parse_input_and_config(
    argc      = argc - 2;
 #endif
 
+#ifdef WEBOS
+   argv      = &(argv[1]);
+   argc      = argc - 1;
+#endif
+
 #ifndef HAVE_MENU
    if (argc == 1)
    {
