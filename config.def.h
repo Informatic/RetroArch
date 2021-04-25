@@ -194,7 +194,7 @@
 
 /* To start in Fullscreen, or not. */
 
-#if defined(HAVE_STEAM) || defined(DINGUX) || defined(WEBOS)
+#if defined(HAVE_STEAM) || defined(DINGUX)
 /* Start in fullscreen mode for Steam and
  * Dingux builds */
 #define DEFAULT_FULLSCREEN true
@@ -212,8 +212,8 @@
 /* Window */
 /* Window size. A value of 0 uses window scale
  * multiplied by the core framebuffer size. */
-#define DEFAULT_WINDOW_WIDTH 1280
-#define DEFAULT_WINDOW_HEIGHT 720
+#define DEFAULT_WINDOW_WIDTH 1920
+#define DEFAULT_WINDOW_HEIGHT 1080
 
 /* Fullscreen resolution. A value of 0 uses the desktop
  * resolution. */
@@ -234,7 +234,18 @@
 #define DEFAULT_WINDOW_OPACITY 100
 
 /* Whether to show the usual window decorations like border, titlebar etc. */
+#ifdef WEBOS
+#define DEFAULT_WINDOW_DECORATIONS false
+#else
 #define DEFAULT_WINDOW_DECORATIONS true
+#endif
+
+/* Whether to remember window positions */
+#ifdef WEBOS
+#define DEFAULT_WINDOW_SAVE_POSITIONS true
+#else
+#define DEFAULT_WINDOW_SAVE_POSITIONS false
+#endif
 
 #if defined(RARCH_CONSOLE) || defined(__APPLE__)
 #define DEFAULT_LOAD_DUMMY_ON_CORE_SHUTDOWN false
@@ -1002,7 +1013,7 @@ static const bool audio_enable_menu_bgm    = false;
 #define DEFAULT_REWIND_GRANULARITY 1
 
 /* Pause gameplay when gameplay loses focus. */
-#ifdef EMSCRIPTEN
+#if defined(EMSCRIPTEN) || defined(WEBOS)
 #define DEFAULT_PAUSE_NONACTIVE false
 #else
 #define DEFAULT_PAUSE_NONACTIVE true

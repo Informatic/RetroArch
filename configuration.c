@@ -1798,7 +1798,7 @@ static struct config_bool_setting *populate_settings_bool(
 
    SETTING_BOOL("video_msg_bgcolor_enable",      &settings->bools.video_msg_bgcolor_enable, true, message_bgcolor_enable, false);
    SETTING_BOOL("video_window_show_decorations", &settings->bools.video_window_show_decorations, true, DEFAULT_WINDOW_DECORATIONS, false);
-   SETTING_BOOL("video_window_save_positions", &settings->bools.video_window_save_positions, true, false, false);
+   SETTING_BOOL("video_window_save_positions", &settings->bools.video_window_save_positions, true, DEFAULT_WINDOW_SAVE_POSITIONS, false);
 
    SETTING_BOOL("sustained_performance_mode",    &settings->bools.sustained_performance_mode, true, sustained_performance_mode, false);
 

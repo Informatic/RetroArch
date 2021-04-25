@@ -133,6 +133,9 @@ static void sdl_ctx_destroy(void *data)
       return;
 
    sdl_ctx_destroy_resources(sdl);
+#ifdef WEBOS
+   SDL_QuitSubSystem(SDL_INIT_VIDEO);
+#endif
    free(sdl);
 }
 
