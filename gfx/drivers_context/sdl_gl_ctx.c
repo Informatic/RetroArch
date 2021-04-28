@@ -93,7 +93,7 @@ static void *sdl_ctx_init(void *video_driver)
 #ifdef WEBOS
    SDL_SetHint(SDL_HINT_WEBOS_ACCESS_POLICY_KEYS_BACK, "true");
    SDL_SetHint(SDL_HINT_WEBOS_ACCESS_POLICY_KEYS_EXIT, "true");
-   SDL_SetHint(SDL_HINT_WEBOS_CURSOR_SLEEP_TIME, "5000");
+   SDL_SetHint(SDL_HINT_WEBOS_CURSOR_SLEEP_TIME, "1000");
 #endif
 
    /* Initialise graphics subsystem, if required */
