@@ -164,31 +164,34 @@ static int16_t sdl_input_state(
                   return sdl->mouse_l;
                case RETRO_DEVICE_ID_MOUSE_RIGHT:
                   return sdl->mouse_r;
-               case RETRO_DEVICE_ID_MOUSE_WHEELUP:
 #ifdef WEBOS
+               case RETRO_DEVICE_ID_MOUSE_WHEELUP:
                   // Note: webOS wheel is reversed
                   if (sdl->mouse_wd != 0) {
                       sdl->mouse_wd = 0;
                       return 1;
                   }
                   return 0;
-#else
-                  return sdl->mouse_wu;
-#endif
                case RETRO_DEVICE_ID_MOUSE_WHEELDOWN:
-#ifdef WEBOS
                   if (sdl->mouse_wu != 0) {
                       sdl->mouse_wu = 0;
                       return 1;
                   }
                   return 0;
+               case RETRO_DEVICE_ID_MOUSE_X:
+                  return sdl->mouse_abs_x;
+               case RETRO_DEVICE_ID_MOUSE_Y:
+                  return sdl->mouse_abs_y;
 #else
+               case RETRO_DEVICE_ID_MOUSE_WHEELUP:
+                  return sdl->mouse_wu;
+               case RETRO_DEVICE_ID_MOUSE_WHEELDOWN:
                   return sdl->mouse_wd;
-#endif
                case RETRO_DEVICE_ID_MOUSE_X:
                   return sdl->mouse_x;
                case RETRO_DEVICE_ID_MOUSE_Y:
                   return sdl->mouse_y;
+#endif
                case RETRO_DEVICE_ID_MOUSE_MIDDLE:
                   return sdl->mouse_m;
                case RETRO_DEVICE_ID_MOUSE_BUTTON_4:
