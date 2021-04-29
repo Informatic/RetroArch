@@ -35,6 +35,10 @@
 #include "../../gfx/common/sdl2_common.h"
 #endif
 
+#ifdef WEBOS
+#include <SDL_webOS.h>
+#endif
+
 /* TODO/FIXME -
  * fix game focus toggle */
 
@@ -54,6 +58,15 @@ typedef struct sdl_input
    int mouse_wl;
    int mouse_wr;
 } sdl_input_t;
+
+#ifdef WEBOS
+enum sdl_webos_special_key {
+   sdl_webos_spkey_back,
+   sdl_webos_spkey_size,
+};
+
+static uint8_t sdl_webos_special_keymap[sdl_webos_spkey_size] = {0};
+#endif
 
 static void *sdl_input_init(const char *joypad_driver)
 {
@@ -75,6 +88,17 @@ static bool sdl_key_pressed(int key)
 #else
    const uint8_t *keymap = SDL_GetKeyState(&num_keys);
    unsigned sym          = rarch_keysym_lut[(enum retro_key)key];
+#endif
+
+#ifdef WEBOS
+   if (key == RETROK_BACKSPACE && sdl_webos_special_keymap[sdl_webos_spkey_back])
+   {
+      // Reset to unpressed state
+      sdl_webos_special_keymap[sdl_webos_spkey_back] = 0;
+      return true;
+   }
+   if (key == RETROK_ESCAPE && keymap[SDL_WEBOS_SCANCODE_EXIT])
+      return true;
 #endif
 
    if (sym >= (unsigned)num_keys)
@@ -352,7 +376,22 @@ static void sdl_input_poll(void *data)
       {
          uint16_t mod = 0;
          unsigned code = input_keymaps_translate_keysym_to_rk(
-               event.key.keysym.sym);
+            event.key.keysym.sym);
+#ifdef WEBOS
+         switch ((int) event.key.keysym.scancode)
+         {
+         case SDL_WEBOS_SCANCODE_BACK:
+            // Because webOS is sending DOWN/UP at the same time, we save this flag for later
+            sdl_webos_special_keymap[sdl_webos_spkey_back] |= event.type == SDL_KEYDOWN;
+            code = RETROK_BACKSPACE;
+            break;
+         case SDL_WEBOS_SCANCODE_EXIT:
+            code = RETROK_ESCAPE;
+            break;
+         default:
+            break;
+         }
+#endif
 
          if (event.key.keysym.mod & KMOD_SHIFT)
             mod |= RETROKMOD_SHIFT;
