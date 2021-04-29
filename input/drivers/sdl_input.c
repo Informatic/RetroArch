@@ -99,6 +99,14 @@ static bool sdl_key_pressed(int key)
    }
    if (key == RETROK_ESCAPE && keymap[SDL_WEBOS_SCANCODE_EXIT])
       return true;
+   if (key == RETROK_x && keymap[SDL_WEBOS_SCANCODE_RED])
+      return true;
+   if (key == RETROK_z && keymap[SDL_WEBOS_SCANCODE_GREEN])
+      return true;
+   if (key == RETROK_s && keymap[SDL_WEBOS_SCANCODE_YELLOW])
+      return true;
+   if (key == RETROK_a && keymap[SDL_WEBOS_SCANCODE_BLUE])
+      return true;
 #endif
 
    if (sym >= (unsigned)num_keys)
@@ -384,6 +392,18 @@ static void sdl_input_poll(void *data)
             // Because webOS is sending DOWN/UP at the same time, we save this flag for later
             sdl_webos_special_keymap[sdl_webos_spkey_back] |= event.type == SDL_KEYDOWN;
             code = RETROK_BACKSPACE;
+            break;
+         case SDL_WEBOS_SCANCODE_RED:
+            code = RETROK_x;
+            break;
+         case SDL_WEBOS_SCANCODE_GREEN:
+            code = RETROK_z;
+            break;
+         case SDL_WEBOS_SCANCODE_YELLOW:
+            code = RETROK_s;
+            break;
+         case SDL_WEBOS_SCANCODE_BLUE:
+            code = RETROK_a;
             break;
          case SDL_WEBOS_SCANCODE_EXIT:
             code = RETROK_ESCAPE;
