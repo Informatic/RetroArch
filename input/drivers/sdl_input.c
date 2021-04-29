@@ -482,16 +482,21 @@ input_driver_t input_sdl = {
    NULL
 };
 
-#if WEBOS
+#ifdef WEBOS
 SDL_bool SDL_webOSCursorVisibility(SDL_bool visible)
 {
-    SDL_bool (*fn)(SDL_bool visible) = dlsym(RTLD_NEXT, "SDL_webOSCursorVisibility");
-    if (!fn)
-    {
-       SDL_ShowCursor(SDL_DISABLE);
-       SDL_ShowCursor(SDL_ENABLE);
-       return SDL_TRUE;
-    }
-    return fn(visible);
+   static SDL_bool (*fn)(SDL_bool visible) = NULL;
+   static bool dlsym_called = false;
+   if (!dlsym_called) {
+      fn = dlsym(RTLD_NEXT, "SDL_webOSCursorVisibility");
+      dlsym_called = true;
+   }
+   if (!fn)
+   {
+      SDL_ShowCursor(SDL_DISABLE);
+      SDL_ShowCursor(SDL_ENABLE);
+      return SDL_TRUE;
+   }
+   return fn(visible);
 }
 #endif
