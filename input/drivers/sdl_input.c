@@ -37,6 +37,7 @@
 
 #ifdef WEBOS
 #include <SDL_webOS.h>
+#include <dlfcn.h>
 #endif
 
 /* TODO/FIXME -
@@ -413,11 +414,8 @@ static void sdl_input_poll(void *data)
          }
 
          // Disable cursor when using the buttons
-         if (code != RETROK_RETURN
-                 && event.key.keysym.scancode != SDL_WEBOS_SCANCODE_CURSOR_HIDE
-                 && event.key.keysym.scancode != SDL_WEBOS_SCANCODE_CURSOR_SHOW) {
-            SDL_ShowCursor(SDL_DISABLE);
-            SDL_ShowCursor(SDL_ENABLE);
+         if (code && code != RETROK_RETURN) {
+            SDL_webOSCursorVisibility(0);
          }
 #endif
 
@@ -483,3 +481,17 @@ input_driver_t input_sdl = {
 #endif
    NULL
 };
+
+#if WEBOS
+SDL_bool SDL_webOSCursorVisibility(SDL_bool visible)
+{
+    SDL_bool (*fn)(SDL_bool visible) = dlsym(RTLD_NEXT, "SDL_webOSCursorVisibility");
+    if (!fn)
+    {
+       SDL_ShowCursor(SDL_DISABLE);
+       SDL_ShowCursor(SDL_ENABLE);
+       return SDL_TRUE;
+    }
+    return fn(visible);
+}
+#endif
