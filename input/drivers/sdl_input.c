@@ -98,7 +98,7 @@ static bool sdl_key_pressed(int key)
       sdl_webos_special_keymap[sdl_webos_spkey_back] = 0;
       return true;
    }
-   if (key == RETROK_ESCAPE && keymap[SDL_WEBOS_SCANCODE_EXIT])
+   if (key == RETROK_F1 && keymap[SDL_WEBOS_SCANCODE_EXIT])
       return true;
    if (key == RETROK_x && keymap[SDL_WEBOS_SCANCODE_RED])
       return true;
@@ -407,7 +407,7 @@ static void sdl_input_poll(void *data)
             code = RETROK_a;
             break;
          case SDL_WEBOS_SCANCODE_EXIT:
-            code = RETROK_ESCAPE;
+            code = RETROK_F1;
             break;
          default:
             break;
