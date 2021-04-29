@@ -222,11 +222,13 @@ clean:
 	rm -rf webos/dist
 
 ipk: $(TARGET)
-	mkdir -p webos/dist
+	rm -rf webos/dist
+	mkdir -p webos/dist/lib
 	echo "$$APPINFO" > webos/dist/appinfo.json
 	cp -t webos/dist -vf $(TARGET) webos/icon160.png
+	cp -t webos/dist/lib -vf $(WEBOS_LIB_DIR)/libstdc++.so.6
 	$(STRIP) webos/dist/$(TARGET)
-	cd webos; ares-package dist
+	cd webos && ares-package dist
 
 install: ipk
 	ares-install webos/$(PACKAGE_NAME)_$(PACKAGE_VERSION)_$(ARCH).ipk
