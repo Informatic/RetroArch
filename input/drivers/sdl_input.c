@@ -411,6 +411,14 @@ static void sdl_input_poll(void *data)
          default:
             break;
          }
+
+         // Disable cursor when using the buttons
+         if (code != RETROK_RETURN
+                 && event.key.keysym.scancode != SDL_WEBOS_SCANCODE_CURSOR_HIDE
+                 && event.key.keysym.scancode != SDL_WEBOS_SCANCODE_CURSOR_SHOW) {
+            SDL_ShowCursor(SDL_DISABLE);
+            SDL_ShowCursor(SDL_ENABLE);
+         }
 #endif
 
          if (event.key.keysym.mod & KMOD_SHIFT)
