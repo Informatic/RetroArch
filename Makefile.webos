@@ -124,7 +124,7 @@ DEF_FLAGS += -I. -Ideps -Ideps/stb -DWEBOS=1 -MMD
 DEF_FLAGS += -Wall -Wno-unused-variable
 LIBS := -ldl -lz -lrt -pthread
 CFLAGS :=
-CXXFLAGS := -fno-exceptions -fno-rtti -std=c++11 -D__STDC_CONSTANT_MACROS
+CXXFLAGS := -fno-exceptions -fno-rtti -std=c++11 -D__STDC_CONSTANT_MACROS -D_GLIBCXX_USE_CXX11_ABI=0
 ASFLAGS :=
 LDFLAGS := -Wl,--gc-sections
 INCLUDE_DIRS = -I$(WEBOS_INC_DIR)
@@ -226,7 +226,6 @@ ipk: $(TARGET)
 	mkdir -p webos/dist/lib
 	echo "$$APPINFO" > webos/dist/appinfo.json
 	cp -t webos/dist -vf $(TARGET) webos/icon160.png
-	cp -t webos/dist/lib -vf $(WEBOS_LIB_DIR)/libstdc++.so.6
 	$(STRIP) webos/dist/$(TARGET)
 	cd webos && ares-package dist
 
