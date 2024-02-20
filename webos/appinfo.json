@@ -1,6 +1,6 @@
 {
-    "id": "com.retroarch",
-    "version": "1.9.8",
+    "id": "com.webosbrew.retroarch",
+    "version": "1.17.0",
     "vendor": "libretro.com",
     "title": "RetroArch",
     "icon": "icon160.png",

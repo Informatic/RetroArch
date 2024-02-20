@@ -8208,7 +8208,7 @@ bool retroarch_main_quit(void)
    retroarch_menu_running_finished(true);
 #endif
 
-#ifdef HAVE_ACCESSIBILITY
+#ifdef HAVE_TRANSLATE
    translation_release(false);
 #ifdef HAVE_THREADS
    if (access_st->image_lock)
