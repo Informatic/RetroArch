@@ -140,10 +140,12 @@ DEFINES += -DHAVE_PULSE
 DEFINES += -DHAVE_NETWORKING -DHAVE_IFINFO -DHAVE_ONLINE_UPDATER -DHAVE_UPDATE_ASSETS -DHAVE_UPDATE_CORES
 DEFINES += -DHAVE_UPDATE_CORE_INFO
 
-SDL2_CFLAGS := $(shell pkg-config --cflags sdl2)
-SDL2_LIBS := $(shell pkg-config --libs sdl2)
+PKG_CONFIG=$(SDKTARGETSYSROOT)/../../bin/pkg-config
+
+SDL2_CFLAGS := $(shell $(PKG_CONFIG) --cflags sdl2)
+SDL2_LIBS := $(shell $(PKG_CONFIG) --libs sdl2)
 OPENGLES_LIBS = -lGLESv2
-PULSE_LIBS = $(shell pkg-config --libs libpulse)
+PULSE_LIBS = $(shell $(PKG_CONFIG) --libs libpulse)
 MMAP_LIBS = -lc
 NEON_CFLAGS = -mfpu=neon
 NEON_ASFLAGS = -mfpu=neon
