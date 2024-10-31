@@ -249,7 +249,7 @@ static int16_t sdl_input_state(
          if (idx == 0)
          {
             struct video_viewport vp;
-            bool screen                 = device == 
+            bool screen                 = device ==
                RARCH_DEVICE_POINTER_SCREEN;
             const int edge_detect       = 32700;
             bool inside                 = false;
@@ -275,7 +275,7 @@ static int16_t sdl_input_state(
                   res_y = res_screen_y;
                }
 
-               inside =    (res_x >= -edge_detect) 
+               inside =    (res_x >= -edge_detect)
                   && (res_y >= -edge_detect)
                   && (res_x <= edge_detect)
                   && (res_y <= edge_detect);
@@ -398,7 +398,7 @@ static void sdl_input_poll(void *data)
          switch ((int) event.key.keysym.scancode)
          {
             case SDL_WEBOS_SCANCODE_BACK:
-               /* Because webOS is sending DOWN/UP at the same time, 
+               /* Because webOS is sending DOWN/UP at the same time,
                   we save this flag for later */
                sdl_webos_special_keymap[sdl_webos_spkey_back] |= event.type == SDL_KEYDOWN;
                code = RETROK_BACKSPACE;
@@ -487,23 +487,3 @@ input_driver_t input_sdl = {
    NULL,
    NULL
 };
-
-#ifdef WEBOS
-SDL_bool SDL_webOSCursorVisibility(SDL_bool visible)
-{
-   static SDL_bool (*fn)(SDL_bool visible) = NULL;
-   static bool dlsym_called                = false;
-   if (!dlsym_called)
-   {
-      fn                                   = dlsym(RTLD_NEXT, "SDL_webOSCursorVisibility");
-      dlsym_called                         = true;
-   }
-   if (!fn)
-   {
-      SDL_ShowCursor(SDL_DISABLE);
-      SDL_ShowCursor(SDL_ENABLE);
-      return SDL_TRUE;
-   }
-   return fn(visible);
-}
-#endif
